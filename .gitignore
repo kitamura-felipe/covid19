@@ -1,0 +1,17 @@
+.env
+.ipynb_checkpoints
+.DS_Store
+.vscode
+__pycache__
+catboost_info
+
+*.ipynb
+*.pyc
+*.csv
+*.parquet
+*.yaml
+*.pdf
+*.pptx
+*.txt
+
+!exploratory/fluxo_pacientes.pdf
