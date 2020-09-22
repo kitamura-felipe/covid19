@@ -758,4 +758,4 @@ plt.minorticks_on()
 
 save_path_corr = os.path.join(BASE_DIR, "exploratory", "rad_score_corr.pdf")
 plt.savefig(save_path_corr, format="pdf")
-plt.close
+plt.close()

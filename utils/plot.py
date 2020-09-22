@@ -166,6 +166,7 @@ def plot_shap_values(X_test, summaries, feature_names, save_fpath):
     )
     plt.tight_layout()
     plt.savefig(save_fpath, format="pdf")
+    plt.close()
 
 
 def plot_survival(df_test, features, summaries, save_fpath):

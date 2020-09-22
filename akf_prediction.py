@@ -81,7 +81,7 @@ def akf_prediction(df_final):
 
     save_report = os.path.join(BASE_DIR, "desfechos_intermediarios", "akf_report.txt")
     reports = generate_experiment_report(
-        target, df_split, df_final, features, metrics_summary,
+        "Acute Kidney Failure", target, df_split, df_final, features, metrics_summary,
         train_valid_records, test_records, save_report
     )
 

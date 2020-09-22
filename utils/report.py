@@ -1,6 +1,7 @@
+import numpy as np
 import pandas as pd
 
-from scipy.stats import ks_2samp
+from scipy.stats import ks_2samp, chisquare
 from tabulate import tabulate
 
 
@@ -19,7 +20,17 @@ def generate_experiment_report(
     test_sexo_counts = test_records.sexo_M.value_counts()
     test_Pmasc = test_sexo_counts[1] / (test_sexo_counts[1] + test_sexo_counts[0])
 
-    _, sexo_pvalue = ks_2samp(train_valid_records.sexo_M, test_records.sexo_M)
+    # _, sexo_pvalue = ks_2samp(train_valid_records.sexo_M, test_records.sexo_M)
+
+    train_males = train_valid_records.sexo_M.value_counts()[1]
+    train_females = train_valid_records.sexo_M.value_counts()[0]
+    train_total = train_males + train_females
+
+    test_males = test_records.sexo_M.value_counts()[1]
+    test_females = test_records.sexo_M.value_counts()[0]
+    test_total = test_males + test_females
+
+    _, sexo_pvalue = chisquare(np.array([train_males / train_total, train_females / train_total]), np.array([test_males / test_total, test_females / test_total]))
 
     roc_mean = "%.3f" % metrics_summary[metrics_summary.Metric == "ROC AUC"][("Value", "mean")].iloc[0]
     roc_std = "%.3f" % metrics_summary[metrics_summary.Metric == "ROC AUC"][("Value", "std")].iloc[0]
