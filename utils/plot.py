@@ -14,7 +14,7 @@ font = {
 }
 matplotlib.rc("font", **font)
 
-def plot_results_2x2(summaries, save_fpath):
+def plot_results_2x2(summaries, save_fpath, fformat="pdf", dpi=300):
     fig = plt.figure(figsize=(20, 20))
 
     nrows, ncols = 2, 2
@@ -74,7 +74,7 @@ def plot_results_2x2(summaries, save_fpath):
     ax4.minorticks_on()
 
     plt.tight_layout(pad=3)
-    plt.savefig(save_fpath, format="pdf")
+    plt.savefig(save_fpath, format=fformat, dpi=dpi)
     plt.close()
 
     return df_summary.groupby("Metric").agg({
@@ -82,7 +82,7 @@ def plot_results_2x2(summaries, save_fpath):
     }).reset_index()
 
 
-def plot_results_1x2(summaries, save_fpath):
+def plot_results_1x2(summaries, save_fpath, fformat="pdf", dpi=300):
     fig = plt.figure(figsize=(20, 10))
 
     nrows, ncols = 1, 2
@@ -146,7 +146,7 @@ def plot_results_1x2(summaries, save_fpath):
     ax4.minorticks_on()
 
     plt.tight_layout(pad=3)
-    plt.savefig(save_fpath, format="pdf")
+    plt.savefig(save_fpath, format=fformat, dpi=dpi)
     plt.close()
 
     return df_summary.groupby("Metric").agg({
@@ -154,7 +154,7 @@ def plot_results_1x2(summaries, save_fpath):
     }).reset_index()
 
 
-def plot_shap_values(X_test, summaries, feature_names, save_fpath):
+def plot_shap_values(X_test, summaries, feature_names, save_fpath, fformat="pdf", dpi=300):
     plt.figure()
 
     shap_values = np.stack([summary["shap_values"] for summary in summaries])
@@ -165,11 +165,11 @@ def plot_shap_values(X_test, summaries, feature_names, save_fpath):
         feature_names=feature_names
     )
     plt.tight_layout()
-    plt.savefig(save_fpath, format="pdf")
+    plt.savefig(save_fpath, format=fformat, dpi=dpi)
     plt.close()
 
 
-def plot_survival(df_test, features, summaries, save_fpath):
+def plot_survival(df_test, features, summaries, save_fpath, fformat="pdf", dpi=300):
     use_df = deepcopy(df_test)
     use_df["tempo_estadia_hospitalar"] = use_df.apply(
         lambda row: 100000 if not row["obito"] else row["tempo_estadia_hospitalar"],
@@ -251,11 +251,11 @@ def plot_survival(df_test, features, summaries, save_fpath):
     plt.grid(which="minor", linestyle='--', alpha=0.4)
     plt.minorticks_on()
 
-    plt.savefig(save_fpath, format="pdf")
+    plt.savefig(save_fpath, format=fformat, dpi=dpi)
     plt.close()
 
 
-def plot_sensitivity_specificity_vs_threshold(summaries, save_fpath, step=0.05):
+def plot_sensitivity_specificity_vs_threshold(summaries, save_fpath, step=0.05, fformat="pdf", dpi=300):
     nrows, ncols = 1, 1
     fig = plt.figure(figsize=(15*ncols, 15*nrows))
 
@@ -319,5 +319,5 @@ def plot_sensitivity_specificity_vs_threshold(summaries, save_fpath, step=0.05):
     ax1.minorticks_on()
 
     plt.tight_layout(pad=3)
-    plt.savefig(save_fpath, format="pdf")
+    plt.savefig(save_fpath, format=fformat, dpi=dpi)
     plt.close()

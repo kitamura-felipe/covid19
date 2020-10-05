@@ -11,6 +11,7 @@ catboost_info
 *.parquet
 *.yaml
 *.pdf
+*.tiff
 *.pptx
 *.txt
 

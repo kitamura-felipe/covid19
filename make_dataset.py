@@ -717,8 +717,8 @@ ax["main"].grid(which="major")
 ax["main"].grid(which="minor", linestyle='--', alpha=0.4)
 ax["main"].minorticks_on()
 
-save_path_joint = os.path.join(BASE_DIR, "desfechos_finais", "joint_normal_lungs_age.pdf")
-plt.savefig(save_path_joint, format="pdf")
+save_path_joint = os.path.join(BASE_DIR, "desfechos_finais", "joint_normal_lungs_age.tiff")
+plt.savefig(save_path_joint, format="tiff", dpi=300)
 plt.close()
 
 ################################### Segmentation vs Radiologist ####################################
@@ -756,6 +756,6 @@ plt.grid(which="major")
 plt.grid(which="minor", linestyle='--', alpha=0.4)
 plt.minorticks_on()
 
-save_path_corr = os.path.join(BASE_DIR, "exploratory", "rad_score_corr.pdf")
-plt.savefig(save_path_corr, format="pdf")
+save_path_corr = os.path.join(BASE_DIR, "exploratory", "rad_score_corr.tiff")
+plt.savefig(save_path_corr, format="tiff", dpi=300)
 plt.close()

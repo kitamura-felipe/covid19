@@ -64,17 +64,17 @@ def mortality_prediction(df_final):
 
     ############################## Finished training the models ##############################
 
-    save_path_2x2 = os.path.join(BASE_DIR, "desfechos_finais", "mortality_model_2x2.pdf")
-    plot_results_2x2(summaries, save_path_2x2)
+    save_path_2x2 = os.path.join(BASE_DIR, "desfechos_finais", "mortality_model_2x2.tiff")
+    plot_results_2x2(summaries, save_path_2x2, fformat="tiff")
 
-    save_path_1x2 = os.path.join(BASE_DIR, "desfechos_finais", "mortality_model_1x2.pdf")
-    metrics_summary = plot_results_1x2(summaries, save_path_1x2)
+    save_path_1x2 = os.path.join(BASE_DIR, "desfechos_finais", "mortality_model_1x2.tiff")
+    metrics_summary = plot_results_1x2(summaries, save_path_1x2, fformat="tiff")
 
-    save_path_shap = os.path.join(BASE_DIR, "desfechos_finais", "mortality_shap.pdf")
-    shap_values_plot = plot_shap_values(X_test, summaries, [f[1] for f in features_display_names], save_path_shap)
+    save_path_shap = os.path.join(BASE_DIR, "desfechos_finais", "mortality_shap.tiff")
+    shap_values_plot = plot_shap_values(X_test, summaries, [f[1] for f in features_display_names], save_path_shap, fformat="tiff")
 
-    save_path_sens_spec = os.path.join(BASE_DIR, "desfechos_finais", "mortality_sens_spec.pdf")
-    plot_sensitivity_specificity_vs_threshold(summaries, save_path_sens_spec)
+    save_path_sens_spec = os.path.join(BASE_DIR, "desfechos_finais", "mortality_sens_spec.tiff")
+    plot_sensitivity_specificity_vs_threshold(summaries, save_path_sens_spec, fformat="tiff")
 
     save_report = os.path.join(BASE_DIR, "desfechos_finais", "mortality_report.txt")
     reports = generate_experiment_report(
@@ -136,17 +136,17 @@ def mortality_prediction_loio(df_final, institution):
 
     ############################## Finished training the models ##############################
 
-    save_path_2x2 = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_model_2x2.pdf")
-    plot_results_2x2(summaries, save_path_2x2)
+    save_path_2x2 = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_model_2x2.tiff")
+    plot_results_2x2(summaries, save_path_2x2, fformat="tiff")
 
-    save_path_1x2 = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_model_1x2.pdf")
-    metrics_summary = plot_results_1x2(summaries, save_path_1x2)
+    save_path_1x2 = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_model_1x2.tiff")
+    metrics_summary = plot_results_1x2(summaries, save_path_1x2, fformat="tiff")
 
-    save_path_shap = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_shap.pdf")
-    shap_values_plot = plot_shap_values(X_test, summaries, [f[1] for f in features_display_names], save_path_shap)
+    save_path_shap = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_shap.tiff")
+    shap_values_plot = plot_shap_values(X_test, summaries, [f[1] for f in features_display_names], save_path_shap, fformat="tiff")
 
-    save_path_sens_spec = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_sens_spec.pdf")
-    plot_sensitivity_specificity_vs_threshold(summaries, save_path_sens_spec)
+    save_path_sens_spec = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_sens_spec.tiff")
+    plot_sensitivity_specificity_vs_threshold(summaries, save_path_sens_spec, fformat="tiff")
 
     save_report = os.path.join(BASE_DIR, "desfechos_finais", "LOIO", f"{institution[0]}_mortality_report.txt")
     reports = generate_experiment_report(
