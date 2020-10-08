@@ -10,7 +10,7 @@ import shap
 from copy import deepcopy
 
 font = {
-    "size": 22
+    "size": 30
 }
 matplotlib.rc("font", **font)
 

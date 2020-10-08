@@ -13,7 +13,7 @@ from tqdm import tqdm
 from utils.helpers import *
 
 font = {
-    "size": 22
+    "size": 30
 }
 matplotlib.rc("font", **font)
 
