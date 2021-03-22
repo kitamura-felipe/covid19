@@ -1,4 +1,4 @@
-# An explainable risk predictor of COVID-19 outcomes
+# A model for COVID-19 prognostication in the Brazilian population: a retrospective multicenter study
 
 Contributors:
 
