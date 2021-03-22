@@ -243,8 +243,8 @@ def plot_survival(df_test, features, summaries, save_fpath, fformat="pdf", dpi=3
         "Predicted negative"
     ], loc="lower left")
 
-    plt.ylabel("Percentage of Survivors")
-    plt.xlabel("Days")
+    plt.ylabel("Survivors (%)")
+    plt.xlabel("Time (days)")
     plt.ylim([0, 105])
 
     plt.grid(which="major")
@@ -257,7 +257,7 @@ def plot_survival(df_test, features, summaries, save_fpath, fformat="pdf", dpi=3
 
 def plot_sensitivity_specificity_vs_threshold(summaries, save_fpath, step=0.05, fformat="pdf", dpi=300):
     nrows, ncols = 1, 1
-    fig = plt.figure(figsize=(15*ncols, 15*nrows))
+    fig = plt.figure(figsize=(20*ncols, 20*nrows))
 
     mean_thres = np.linspace(0, 1, 100)
     senss = []
@@ -308,16 +308,46 @@ def plot_sensitivity_specificity_vs_threshold(summaries, save_fpath, step=0.05, 
     ax1.plot(1-mean_thres, mean_spec, color="darkorange", lw=2, alpha=1., label="Mean specificity")
     ax1.fill_between(1-mean_thres, specs_lower, specs_upper, color="darkorange", alpha=.4, label=r"$\pm$ 1 std. dev.")
 
-    ax1.legend(loc="center right", framealpha=0.7)
+    ax1.legend(loc="center right", framealpha=0.7, fontsize=40)
     ax1.set_xlim([-0.05, 1.05])
     ax1.set_ylim([-0.05, 1.05])
-    ax1.set_ylabel("Sensitivity / Specificity")
-    ax1.set_xlabel("Cut-off value")
+    ax1.set_ylabel("Sensitivity / Specificity", fontsize=45)
+    ax1.set_xlabel("Cut-off value", fontsize=45)
 
     ax1.grid(which="major")
     ax1.grid(which="minor", linestyle='--', alpha=0.4)
     ax1.minorticks_on()
 
     plt.tight_layout(pad=3)
+    plt.savefig(save_fpath, format=fformat, dpi=dpi)
+    plt.close()
+
+
+def plot_joint_distribution(df, save_fpath, fformat="pdf", dpi=300):
+    scatter_alpha = 0.7
+    cols = ["idade", "seg_normal", "sofa_score", "obito", "alta"]
+
+    scatter = df[df.seg_normal.notna()][cols].drop_duplicates()
+    scatter.sofa_score = df.sofa_score.fillna(0.0)
+    scatter["Outcome"] = df.obito.map({False: "Discharges", True: "Deaths"})
+
+    plt.figure(figsize=(15, 15))
+
+    grid = sns.jointplot(
+        data=scatter,
+        x="idade",
+        y="seg_normal",
+        hue="Outcome",
+        alpha=scatter_alpha,
+        s=scatter.sofa_score.apply(lambda x: (1.3 * x + 3) ** 2)
+    )
+
+    grid.set_axis_labels("Age (years)", "Healthy lungs (%)", fontsize=16)
+    grid.ax_joint.grid(which="major")
+    grid.ax_joint.grid(which="minor", linestyle='--', alpha=0.4)
+
+    grid.ax_marg_x.set_xlim(-5, scatter.idade.max() + 5)
+    grid.ax_marg_y.set_ylim(-0.05, 1.05)
+
     plt.savefig(save_fpath, format=fformat, dpi=dpi)
     plt.close()

@@ -7,10 +7,10 @@ import pandas as pd
 import re
 
 from dateutil import parser
-from plastid.plotting.plots import scatterhist_xy
 from tqdm import tqdm
 
 from utils.helpers import *
+from utils.plot import plot_joint_distribution
 
 font = {
     "size": 30
@@ -646,7 +646,7 @@ df_final["mechanical_ventilation"] = df_final.apply(calc_ventilation, axis=1)
 # And we want to have a separate file that includes only the data of patients that were hospitalized.
 
 df_internacao = df_final[df_final.data_admissao_hospitalar.notna()].reset_index()
-# df_internacao.to_csv(os.path.join(BASE_DIR, "data", "covid19_internacao.csv"), index=False)
+df_internacao.to_csv(os.path.join(BASE_DIR, "data", "covid19_internacao.csv"), index=False)
 
 ############################## Statistics ##############################
 
@@ -669,57 +669,8 @@ Excluded (still hospitalized) = {still_hospitalized}
 
 #################################### Plot joint distributions ######################################
 
-# TODO: consider moving to utils/plot.py
-
-plt.figure(figsize=(15, 15))
-
-scatter_alpha = 0.7
-
-df_final = df_internacao
-
-scatter_alta = df_final[df_final.alta]
-scatter_alta = scatter_alta[scatter_alta.seg_normal.notna()][["idade", "seg_normal", "sofa_score"]]
-scatter_alta = scatter_alta.drop_duplicates()
-scatter_alta.sofa_score = scatter_alta.sofa_score.fillna(0.0)
-
-fig, ax = scatterhist_xy(
-    scatter_alta.idade,
-    scatter_alta.seg_normal,
-    label="Discharges",
-    log="",
-    axes=plt.gca(),
-    scargs={"s": scatter_alta.sofa_score.apply(lambda x: (2 * x + 3) ** 2), "alpha": scatter_alpha},
-)
-
-scatter_obito = df_final[df_final.obito]
-scatter_obito = scatter_obito[scatter_obito.seg_normal.notna()][["idade", "seg_normal", "sofa_score"]]
-scatter_obito = scatter_obito.drop_duplicates()
-scatter_obito.sofa_score = scatter_obito.sofa_score.fillna(0.0)
-
-scatterhist_xy(
-    scatter_obito.idade,
-    scatter_obito.seg_normal,
-    color="orange",
-    label="Deaths",
-    log="",
-    axes=ax,
-    scargs={"s": scatter_obito.sofa_score.apply(lambda x: (2 * x + 3) ** 2), "alpha": scatter_alpha},
-)
-
-ax["main"].set_xlabel("Age")
-ax["main"].set_ylabel("% Helthy Lungs")
-ax["main"].legend([
-    "Discharges",
-    "Deaths"
-], framealpha=0.5)
-
-ax["main"].grid(which="major")
-ax["main"].grid(which="minor", linestyle='--', alpha=0.4)
-ax["main"].minorticks_on()
-
 save_path_joint = os.path.join(BASE_DIR, "desfechos_finais", "joint_normal_lungs_age.tiff")
-plt.savefig(save_path_joint, format="tiff", dpi=300)
-plt.close()
+plot_joint_distribution(df_internacao, save_path_joint, fformat="tiff")
 
 ################################### Segmentation vs Radiologist ####################################
 
@@ -739,17 +690,18 @@ sum_score = (
 # import pdb
 # pdb.set_trace()
 
-corr_coef = (1 - df_final.seg_normal).corr(sum_score)
+corr_coeff = (1 - df_final.seg_normal).corr(sum_score)
+corr_coeff_str = ("%.2f" % corr_coeff).lstrip("0")
 plt.scatter(sum_score, 1 - df_final.seg_normal, c="royalblue",
-            label="Correlation coeficient = %.2f" % corr_coef,
+            label=f"Correlation coefficient = {corr_coeff_str}",
             s=df_final.volume_pulmao.apply(lambda x: (2 * x + 1) ** 2),
             alpha=0.7)
 
 plt.xlabel("Ragiologist's score")
-plt.ylabel("% of affected lungs")
+plt.ylabel("Affected lungs (%)")
 
 props = dict(boxstyle="round", facecolor="snow", alpha=0.4)
-textstr = "Correlation coeficient = %.2f" % corr_coef
+textstr = f"Correlation coefficient = {corr_coeff_str}"
 plt.text(0.05, 0.87, textstr, verticalalignment="center", bbox=props)
 
 plt.grid(which="major")
