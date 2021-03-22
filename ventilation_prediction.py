@@ -28,11 +28,11 @@ def ventilation_prediction(df_final):
     # Now we expect to prepare our training pipeline
 
     features_display_names = [
-        ("idade", "age"),
-        ("seg_normal", "% healthy lungs"),
-        ("taxa_gordura", "% fat"),
-        ("sofa_score", "sofa score"),
-        ("n_comorbidades", "N comorbidities"),
+        ("idade", "Age (years)"),
+        ("seg_normal", "Healthy lungs (%)"),
+        ("taxa_gordura", "Mediastinal fat (%)"),
+        ("sofa_score", "SOFA score"),
+        ("n_comorbidades", "Comorbidities"),
     ]
 
     features = [
@@ -108,11 +108,11 @@ def ventilation_prediction_loio(df_final, institution):
     # Now we expect to prepare our training pipeline
 
     features_display_names = [
-        ("idade", "age"),
-        ("seg_normal", "% healthy lungs"),
-        ("taxa_gordura", "% fat"),
-        ("sofa_score", "sofa score"),
-        ("n_comorbidades", "N comorbidities"),
+        ("idade", "Age (years)"),
+        ("seg_normal", "Healthy lungs (%)"),
+        ("taxa_gordura", "Mediastinal fat (%)"),
+        ("sofa_score", "SOFA score"),
+        ("n_comorbidades", "Comorbidities"),
     ]
 
     features = [
@@ -155,7 +155,7 @@ def ventilation_prediction_loio(df_final, institution):
     metrics_summary = plot_results_1x2(summaries, save_path_1x2, fformat="tiff")
 
     save_path_shap = os.path.join(BASE_DIR, "desfechos_intermediarios", "LOIO", f"{institution[0]}_ventilation_shap.tiff")
-    shap_values_plot     = plot_shap_values(X_test, summaries, [f[1] for f in features_display_names], save_path_shap, fformat="tiff")
+    shap_values_plot = plot_shap_values(X_test, summaries, [f[1] for f in features_display_names], save_path_shap, fformat="tiff")
 
     save_path_sens_spec = os.path.join(BASE_DIR, "desfechos_intermediarios", "LOIO", f"{institution[0]}_ventilation_sens_spec.tiff")
     plot_sensitivity_specificity_vs_threshold(summaries, save_path_sens_spec, fformat="tiff")

@@ -29,11 +29,11 @@ def sepsis_prediction(df_final):
     # Now we expect to prepare our training pipeline
 
     features_display_names = [
-        ("idade", "age"),
-        ("seg_normal", "% healthy lungs"),
-        ("taxa_gordura", "% fat"),
-        ("sofa_score", "sofa score"),
-        ("leucocitos", "leukocytes"),
+        ("idade", "Age (years)"),
+        ("seg_normal", "Healthy lungs (%)"),
+        ("taxa_gordura", "Mediastinal fat (%)"),
+        ("sofa_score", "SOFA score"),
+        ("leucocitos", "Leukocyte count"),
     ]
 
     features = [
@@ -108,11 +108,11 @@ def sepsis_prediction_loio(df_final, institution):
     # Now we expect to prepare our training pipeline
 
     features_display_names = [
-        ("idade", "age"),
-        ("seg_normal", "% healthy lungs"),
-        ("taxa_gordura", "% fat"),
-        ("sofa_score", "sofa score"),
-        ("leucocitos", "leukocytes"),
+        ("idade", "Age (years)"),
+        ("seg_normal", "Healthy lungs (%)"),
+        ("taxa_gordura", "Mediastinal fat (%)"),
+        ("sofa_score", "SOFA score"),
+        ("leucocitos", "Leukocyte count"),
     ]
 
     features = [

@@ -28,11 +28,11 @@ def ards_prediction(df_final):
     # Now we expect to prepare our training pipeline
 
     features_display_names = [
-        ("idade", "age"),
-        ("seg_normal", "% healthy lungs"),
-        ("taxa_gordura", "% fat"),
-        ("sofa_score", "sofa score"),
-        ("n_comorbidades", "N comorbidities"),
+        ("idade", "Age (years)"),
+        ("seg_normal", "Healthy lungs (%)"),
+        ("taxa_gordura", "Mediastinal fat (%)"),
+        ("sofa_score", "SOFA score"),
+        ("n_comorbidades", "Comorbidities"),
     ]
 
     features = [
@@ -107,11 +107,11 @@ def ards_prediction_loio(df_final, institution):
     # Now we expect to prepare our training pipeline
 
     features_display_names = [
-        ("idade", "age"),
-        ("seg_normal", "% healthy lungs"),
-        ("taxa_gordura", "% fat"),
-        ("sofa_score", "sofa score"),
-        ("n_comorbidades", "N comorbidities"),
+        ("idade", "Age (years)"),
+        ("seg_normal", "Healthy lungs (%)"),
+        ("taxa_gordura", "Mediastinal fat (%)"),
+        ("sofa_score", "SOFA score"),
+        ("n_comorbidades", "Comorbidities"),
     ]
 
     features = [
